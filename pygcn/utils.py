@@ -4,6 +4,9 @@ import torch
 
 
 def encode_onehot(labels):
+    """
+    TODO 使用 sklearn 库函数实现这一功能
+    """
     classes = set(labels)
     classes_dict = {c: np.identity(len(classes))[i, :] for i, c in
                     enumerate(classes)}
@@ -12,27 +15,51 @@ def encode_onehot(labels):
     return labels_onehot
 
 
-def load_data(path="../data/cora/", dataset="cora"):
-    """Load citation network dataset (cora only for now)"""
+def load_data(path="./data/cora/", dataset="cora"):
+    """
+    Load citation network dataset (cora only for now)
+    """
+
     print('Loading {} dataset...'.format(dataset))
 
+    # read the whole data using str first due to the format of the labels
     idx_features_labels = np.genfromtxt("{}{}.content".format(path, dataset),
                                         dtype=np.dtype(str))
+    
+    # use `Sparse Row format` to gerenate a sparse mat.
+    # skip the id & the label to read the word vecs.
     features = sp.csr_matrix(idx_features_labels[:, 1:-1], dtype=np.float32)
+
+    # read the labels & one-hot them
     labels = encode_onehot(idx_features_labels[:, -1])
 
     # build graph
+    # read all the nodes
     idx = np.array(idx_features_labels[:, 0], dtype=np.int32)
-    idx_map = {j: i for i, j in enumerate(idx)}
+    idx_map = {j: i for i, j in enumerate(idx)}         # map paper-id to index
+
+
+    # read all the edges
     edges_unordered = np.genfromtxt("{}{}.cites".format(path, dataset),
                                     dtype=np.int32)
+    
+    # use the index number instead of the original paper-id (TODO WHY?)
     edges = np.array(list(map(idx_map.get, edges_unordered.flatten())),
                      dtype=np.int32).reshape(edges_unordered.shape)
+    
+    # set the adjacency mat.
+    # It's more convenient to use `COOrdinate format` to gerenate a sparse mat.
+    # A[i[k], j[k]] = data[k]
     adj = sp.coo_matrix((np.ones(edges.shape[0]), (edges[:, 0], edges[:, 1])),
-                        shape=(labels.shape[0], labels.shape[0]),
+                        shape=(labels.shape[0], labels.shape[0]),         # N x N
                         dtype=np.float32)
 
-    # build symmetric adjacency matrix
+    # generate symmetric adjacency matrix by performing point-wise multiplication
+    # adj.T  adj    adj.T > adj     shall we?
+    #   0     0         F               N
+    #   0     1         F               + (to adj.T)
+    #   1     0         T               + (to adj)
+    #   1     1         F               N
     adj = adj + adj.T.multiply(adj.T > adj) - adj.multiply(adj.T > adj)
 
     features = normalize(features)
@@ -78,3 +105,4 @@ def sparse_mx_to_torch_sparse_tensor(sparse_mx):
     values = torch.from_numpy(sparse_mx.data)
     shape = torch.Size(sparse_mx.shape)
     return torch.sparse.FloatTensor(indices, values, shape)
+

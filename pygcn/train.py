@@ -14,10 +14,10 @@ from pygcn.models import GCN
 
 # Training settings
 parser = argparse.ArgumentParser()
-parser.add_argument('--no-cuda', action='store_true', default=False,
+parser.add_argument('--no-cuda', action='store_true', default=True,
                     help='Disables CUDA training.')
 parser.add_argument('--fastmode', action='store_true', default=False,
-                    help='Validate during training pass.')
+                    help='Skip validation during training.')
 parser.add_argument('--seed', type=int, default=42, help='Random seed.')
 parser.add_argument('--epochs', type=int, default=200,
                     help='Number of epochs to train.')
@@ -46,6 +46,7 @@ model = GCN(nfeat=features.shape[1],
             nhid=args.hidden,
             nclass=labels.max().item() + 1,
             dropout=args.dropout)
+
 optimizer = optim.Adam(model.parameters(),
                        lr=args.lr, weight_decay=args.weight_decay)
 
@@ -104,3 +105,4 @@ print("Total time elapsed: {:.4f}s".format(time.time() - t_total))
 
 # Testing
 test()
+
