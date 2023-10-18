@@ -1,0 +1,161 @@
+Cora Dataset
+
+2023-10-18 19:52:45,725 - train.py[line:92] - INFO: cuda= False, fastmode= False, seed= 42
+2023-10-18 19:52:45,726 - train.py[line:93] - INFO: epochs= 200, lr= 0.01, weight_decay= 0.0005
+2023-10-18 19:52:45,726 - train.py[line:94] - INFO: hidden= 16, dropout= 0.5
+2023-10-18 19:52:45,726 - utils.py[line:13] - INFO: Loading cora dataset...
+2023-10-18 19:52:50,823 - utils.py[line:115] - INFO: Using Func `symmetric_normalization` for Normalization
+2023-10-18 19:52:56,822 - train.py[line:130] - INFO: Training Finished!
+2023-10-18 19:52:56,822 - train.py[line:131] - INFO: Total time elapsed: 5.9299s
+2023-10-18 19:52:56,836 - train.py[line:67] - INFO: Test set loss= 0.8137, accuracy= 0.8040
+
+
+2023-10-18 19:53:18,888 - train.py[line:92] - INFO: cuda= False, fastmode= False, seed= 42
+2023-10-18 19:53:18,888 - train.py[line:93] - INFO: epochs= 200, lr= 0.01, weight_decay= 0.0005
+2023-10-18 19:53:18,888 - train.py[line:94] - INFO: hidden= 16, dropout= 0.4
+2023-10-18 19:53:18,888 - utils.py[line:13] - INFO: Loading cora dataset...
+2023-10-18 19:53:23,779 - utils.py[line:115] - INFO: Using Func `symmetric_normalization` for Normalization
+2023-10-18 19:53:29,599 - train.py[line:130] - INFO: Training Finished!
+2023-10-18 19:53:29,599 - train.py[line:131] - INFO: Total time elapsed: 5.7499s
+2023-10-18 19:53:29,608 - train.py[line:67] - INFO: Test set loss= 0.8025, accuracy= 0.8060
+
+
+2023-10-18 19:54:08,042 - train.py[line:92] - INFO: cuda= False, fastmode= False, seed= 42
+2023-10-18 19:54:08,042 - train.py[line:93] - INFO: epochs= 200, lr= 0.01, weight_decay= 0.0005
+2023-10-18 19:54:08,043 - train.py[line:94] - INFO: hidden= 16, dropout= 0.3
+2023-10-18 19:54:08,043 - utils.py[line:13] - INFO: Loading cora dataset...
+2023-10-18 19:54:12,699 - utils.py[line:115] - INFO: Using Func `symmetric_normalization` for Normalization
+2023-10-18 19:54:18,547 - train.py[line:130] - INFO: Training Finished!
+2023-10-18 19:54:18,547 - train.py[line:131] - INFO: Total time elapsed: 5.7807s
+2023-10-18 19:54:18,558 - train.py[line:67] - INFO: Test set loss= 0.7644, accuracy= 0.8160
+
+
+2023-10-18 19:54:24,816 - train.py[line:92] - INFO: cuda= False, fastmode= False, seed= 42
+2023-10-18 19:54:24,816 - train.py[line:93] - INFO: epochs= 200, lr= 0.01, weight_decay= 0.0005
+2023-10-18 19:54:24,816 - train.py[line:94] - INFO: hidden= 16, dropout= 0.2
+2023-10-18 19:54:24,817 - utils.py[line:13] - INFO: Loading cora dataset...
+2023-10-18 19:54:29,591 - utils.py[line:115] - INFO: Using Func `symmetric_normalization` for Normalization
+2023-10-18 19:54:35,490 - train.py[line:130] - INFO: Training Finished!
+2023-10-18 19:54:35,490 - train.py[line:131] - INFO: Total time elapsed: 5.8274s
+2023-10-18 19:54:35,500 - train.py[line:67] - INFO: Test set loss= 0.7491, accuracy= 0.8090
+
+
+2023-10-18 19:54:44,466 - train.py[line:92] - INFO: cuda= False, fastmode= False, seed= 42
+2023-10-18 19:54:44,466 - train.py[line:93] - INFO: epochs= 300, lr= 0.01, weight_decay= 0.0005
+2023-10-18 19:54:44,466 - train.py[line:94] - INFO: hidden= 16, dropout= 0.2
+2023-10-18 19:54:44,467 - utils.py[line:13] - INFO: Loading cora dataset...
+2023-10-18 19:54:49,149 - utils.py[line:115] - INFO: Using Func `symmetric_normalization` for Normalization
+2023-10-18 19:54:58,651 - train.py[line:130] - INFO: Training Finished!
+2023-10-18 19:54:58,652 - train.py[line:131] - INFO: Total time elapsed: 9.4339s
+2023-10-18 19:54:58,661 - train.py[line:67] - INFO: Test set loss= 0.6921, accuracy= 0.8180
+
+
+2023-10-18 19:55:05,615 - train.py[line:92] - INFO: cuda= False, fastmode= False, seed= 42
+2023-10-18 19:55:05,616 - train.py[line:93] - INFO: epochs= 300, lr= 0.01, weight_decay= 0.0005
+2023-10-18 19:55:05,616 - train.py[line:94] - INFO: hidden= 16, dropout= 0.3
+2023-10-18 19:55:05,616 - utils.py[line:13] - INFO: Loading cora dataset...
+2023-10-18 19:55:10,477 - utils.py[line:115] - INFO: Using Func `symmetric_normalization` for Normalization
+2023-10-18 19:55:19,935 - train.py[line:130] - INFO: Training Finished!
+2023-10-18 19:55:19,935 - train.py[line:131] - INFO: Total time elapsed: 9.3924s
+2023-10-18 19:55:19,946 - train.py[line:67] - INFO: Test set loss= 0.6863, accuracy= 0.8190
+
+
+2023-10-18 19:55:25,890 - train.py[line:92] - INFO: cuda= False, fastmode= False, seed= 42
+2023-10-18 19:55:25,890 - train.py[line:93] - INFO: epochs= 300, lr= 0.01, weight_decay= 0.0005
+2023-10-18 19:55:25,890 - train.py[line:94] - INFO: hidden= 16, dropout= 0.4
+2023-10-18 19:55:25,891 - utils.py[line:13] - INFO: Loading cora dataset...
+2023-10-18 19:55:30,744 - utils.py[line:115] - INFO: Using Func `symmetric_normalization` for Normalization
+2023-10-18 19:55:40,125 - train.py[line:130] - INFO: Training Finished!
+2023-10-18 19:55:40,125 - train.py[line:131] - INFO: Total time elapsed: 9.3135s
+2023-10-18 19:55:40,136 - train.py[line:67] - INFO: Test set loss= 0.7091, accuracy= 0.8240
+
+
+2023-10-18 19:55:46,493 - train.py[line:92] - INFO: cuda= False, fastmode= False, seed= 42
+2023-10-18 19:55:46,493 - train.py[line:93] - INFO: epochs= 300, lr= 0.01, weight_decay= 0.0005
+2023-10-18 19:55:46,493 - train.py[line:94] - INFO: hidden= 16, dropout= 0.5
+2023-10-18 19:55:46,494 - utils.py[line:13] - INFO: Loading cora dataset...
+2023-10-18 19:55:51,487 - utils.py[line:115] - INFO: Using Func `symmetric_normalization` for Normalization
+2023-10-18 19:56:00,956 - train.py[line:130] - INFO: Training Finished!
+2023-10-18 19:56:00,956 - train.py[line:131] - INFO: Total time elapsed: 9.4024s
+2023-10-18 19:56:00,967 - train.py[line:67] - INFO: Test set loss= 0.7336, accuracy= 0.8160
+
+
+2023-10-18 19:56:31,927 - train.py[line:92] - INFO: cuda= False, fastmode= False, seed= 42
+2023-10-18 19:56:31,927 - train.py[line:93] - INFO: epochs= 200, lr= 0.01, weight_decay= 0.0005
+2023-10-18 19:56:31,927 - train.py[line:94] - INFO: hidden= 32, dropout= 0.5
+2023-10-18 19:56:31,927 - utils.py[line:13] - INFO: Loading cora dataset...
+2023-10-18 19:56:37,065 - utils.py[line:115] - INFO: Using Func `symmetric_normalization` for Normalization
+2023-10-18 19:56:45,625 - train.py[line:130] - INFO: Training Finished!
+2023-10-18 19:56:45,625 - train.py[line:131] - INFO: Total time elapsed: 8.4924s
+2023-10-18 19:56:45,638 - train.py[line:67] - INFO: Test set loss= 0.7020, accuracy= 0.8240
+
+
+2023-10-18 19:56:52,196 - train.py[line:92] - INFO: cuda= False, fastmode= False, seed= 42
+2023-10-18 19:56:52,196 - train.py[line:93] - INFO: epochs= 200, lr= 0.01, weight_decay= 0.0005
+2023-10-18 19:56:52,197 - train.py[line:94] - INFO: hidden= 32, dropout= 0.4
+2023-10-18 19:56:52,197 - utils.py[line:13] - INFO: Loading cora dataset...
+2023-10-18 19:56:56,989 - utils.py[line:115] - INFO: Using Func `symmetric_normalization` for Normalization
+2023-10-18 19:57:05,565 - train.py[line:130] - INFO: Training Finished!
+2023-10-18 19:57:05,565 - train.py[line:131] - INFO: Total time elapsed: 8.5048s
+2023-10-18 19:57:05,580 - train.py[line:67] - INFO: Test set loss= 0.7013, accuracy= 0.8270
+
+
+2023-10-18 19:57:12,131 - train.py[line:92] - INFO: cuda= False, fastmode= False, seed= 42
+2023-10-18 19:57:12,131 - train.py[line:93] - INFO: epochs= 200, lr= 0.01, weight_decay= 0.0005
+2023-10-18 19:57:12,132 - train.py[line:94] - INFO: hidden= 32, dropout= 0.3
+2023-10-18 19:57:12,132 - utils.py[line:13] - INFO: Loading cora dataset...
+2023-10-18 19:57:17,186 - utils.py[line:115] - INFO: Using Func `symmetric_normalization` for Normalization
+2023-10-18 19:57:25,729 - train.py[line:130] - INFO: Training Finished!
+2023-10-18 19:57:25,729 - train.py[line:131] - INFO: Total time elapsed: 8.4680s
+2023-10-18 19:57:25,742 - train.py[line:67] - INFO: Test set loss= 0.6887, accuracy= 0.8250
+
+
+2023-10-18 19:57:32,860 - train.py[line:92] - INFO: cuda= False, fastmode= False, seed= 42
+2023-10-18 19:57:32,860 - train.py[line:93] - INFO: epochs= 200, lr= 0.01, weight_decay= 0.0005
+2023-10-18 19:57:32,860 - train.py[line:94] - INFO: hidden= 32, dropout= 0.2
+2023-10-18 19:57:32,860 - utils.py[line:13] - INFO: Loading cora dataset...
+2023-10-18 19:57:37,733 - utils.py[line:115] - INFO: Using Func `symmetric_normalization` for Normalization
+2023-10-18 19:57:46,346 - train.py[line:130] - INFO: Training Finished!
+2023-10-18 19:57:46,346 - train.py[line:131] - INFO: Total time elapsed: 8.5396s
+2023-10-18 19:57:46,360 - train.py[line:67] - INFO: Test set loss= 0.6829, accuracy= 0.8160
+
+
+2023-10-18 19:57:58,626 - train.py[line:92] - INFO: cuda= False, fastmode= False, seed= 42
+2023-10-18 19:57:58,626 - train.py[line:93] - INFO: epochs= 200, lr= 0.01, weight_decay= 0.0005
+2023-10-18 19:57:58,626 - train.py[line:94] - INFO: hidden= 64, dropout= 0.5
+2023-10-18 19:57:58,626 - utils.py[line:13] - INFO: Loading cora dataset...
+2023-10-18 19:58:12,549 - utils.py[line:115] - INFO: Using Func `symmetric_normalization` for Normalization
+2023-10-18 19:58:25,005 - train.py[line:130] - INFO: Training Finished!
+2023-10-18 19:58:25,005 - train.py[line:131] - INFO: Total time elapsed: 12.3900s
+2023-10-18 19:58:25,025 - train.py[line:67] - INFO: Test set loss= 0.6720, accuracy= 0.8180
+
+
+2023-10-18 19:58:33,094 - train.py[line:92] - INFO: cuda= False, fastmode= False, seed= 42
+2023-10-18 19:58:33,094 - train.py[line:93] - INFO: epochs= 200, lr= 0.01, weight_decay= 0.0005
+2023-10-18 19:58:33,094 - train.py[line:94] - INFO: hidden= 64, dropout= 0.4
+2023-10-18 19:58:33,095 - utils.py[line:13] - INFO: Loading cora dataset...
+2023-10-18 19:58:37,915 - utils.py[line:115] - INFO: Using Func `symmetric_normalization` for Normalization
+2023-10-18 19:58:50,402 - train.py[line:130] - INFO: Training Finished!
+2023-10-18 19:58:50,402 - train.py[line:131] - INFO: Total time elapsed: 12.4190s
+2023-10-18 19:58:50,422 - train.py[line:67] - INFO: Test set loss= 0.6651, accuracy= 0.8210
+
+
+2023-10-18 19:58:59,620 - train.py[line:92] - INFO: cuda= False, fastmode= False, seed= 42
+2023-10-18 19:58:59,620 - train.py[line:93] - INFO: epochs= 200, lr= 0.01, weight_decay= 0.0005
+2023-10-18 19:58:59,620 - train.py[line:94] - INFO: hidden= 64, dropout= 0.3
+2023-10-18 19:58:59,620 - utils.py[line:13] - INFO: Loading cora dataset...
+2023-10-18 19:59:04,626 - utils.py[line:115] - INFO: Using Func `symmetric_normalization` for Normalization
+2023-10-18 19:59:17,231 - train.py[line:130] - INFO: Training Finished!
+2023-10-18 19:59:17,231 - train.py[line:131] - INFO: Total time elapsed: 12.5376s
+2023-10-18 19:59:17,249 - train.py[line:67] - INFO: Test set loss= 0.6653, accuracy= 0.8230
+
+
+2023-10-18 19:59:24,533 - train.py[line:92] - INFO: cuda= False, fastmode= False, seed= 42
+2023-10-18 19:59:24,533 - train.py[line:93] - INFO: epochs= 200, lr= 0.01, weight_decay= 0.0005
+2023-10-18 19:59:24,533 - train.py[line:94] - INFO: hidden= 64, dropout= 0.2
+2023-10-18 19:59:24,534 - utils.py[line:13] - INFO: Loading cora dataset...
+2023-10-18 19:59:37,605 - utils.py[line:115] - INFO: Using Func `symmetric_normalization` for Normalization
+2023-10-18 19:59:49,806 - train.py[line:130] - INFO: Training Finished!
+2023-10-18 19:59:49,806 - train.py[line:131] - INFO: Total time elapsed: 12.1344s
+2023-10-18 19:59:49,825 - train.py[line:67] - INFO: Test set loss= 0.6661, accuracy= 0.8190
+
