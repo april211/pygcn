@@ -1,18 +1,7 @@
 import numpy as np
 import scipy.sparse as sp
 import torch
-
-
-def encode_onehot(labels):
-    """
-    TODO 使用 sklearn 库函数实现这一功能
-    """
-    classes = set(labels)
-    classes_dict = {c: np.identity(len(classes))[i, :] for i, c in
-                    enumerate(classes)}
-    labels_onehot = np.array(list(map(classes_dict.get, labels)),
-                             dtype=np.int32)
-    return labels_onehot
+from sklearn.preprocessing import LabelEncoder
 
 
 def load_data(path="./data/cora/", dataset="cora"):
@@ -30,8 +19,10 @@ def load_data(path="./data/cora/", dataset="cora"):
     # skip the id & the label to read the word vecs.
     X = sp.csr_matrix(idx_features_labels[:, 1:-1], dtype=np.float32)
 
-    # read the labels & one-hot them
-    labels = encode_onehot(idx_features_labels[:, -1])
+    # read the labels and index them
+    label_encoder = LabelEncoder()
+    labels_scalar = label_encoder.fit_transform(idx_features_labels[:, -1])
+    num_classes = len(label_encoder.classes_)
 
     # build graph
     # read all the nodes
@@ -50,8 +41,9 @@ def load_data(path="./data/cora/", dataset="cora"):
     # set the adjacency mat.
     # It's more convenient to use `COOrdinate format` to gerenate a sparse mat.
     # A[i[k], j[k]] = data[k]
+    num_nodes = labels_scalar.shape[0]
     adj = sp.coo_matrix((np.ones(edges.shape[0]), (edges[:, 0], edges[:, 1])),
-                        shape=(labels.shape[0], labels.shape[0]),         # N x N
+                        shape=(num_nodes, num_nodes),         # N x N
                         dtype=np.float32).tocsr()       # convert to csr format for better pf
 
     # generate symmetric adjacency matrix by performing point-wise multiplication
@@ -81,10 +73,11 @@ def load_data(path="./data/cora/", dataset="cora"):
     idx_test = torch.LongTensor(range(500, 1500))
 
     X = torch.FloatTensor(np.array(X.todense()))
-    labels = torch.LongTensor(np.where(labels)[1])          # get scalar label
+    labels_scalar = torch.LongTensor(labels_scalar)       # get scalar label from col-idx
+    
     DAD = sparse_mx_to_torch_sparse_tensor(DAD)
     
-    return DAD, X, labels, idx_train, idx_val, idx_test
+    return DAD, X, labels_scalar, num_classes, idx_train, idx_val, idx_test
 
 
 def normalize_features(X):
@@ -96,7 +89,7 @@ def normalize_features(X):
     r_inv = np.power(rowsum, -1).flatten()
     r_inv[np.isinf(r_inv)] = 0.                 # rowsum == 0
     r_mat_inv = sp.diags(r_inv)
-    X = r_mat_inv.dot(X)                      # row-wise
+    X = r_mat_inv.dot(X)                        # row-wise
     return X
 
 def random_walk_normalization(adj):
@@ -107,7 +100,7 @@ def random_walk_normalization(adj):
 
     rowsum = np.array(adj.sum(1))
     r_inv = np.power(rowsum, -1).flatten()
-    r_inv[np.isinf(r_inv)] = 0.                 # rowsum == 0
+    r_inv[np.isinf(r_inv)] = 0.                   # rowsum == 0
     r_mat_inv = sp.diags(r_inv)
     adj = r_mat_inv.dot(adj)                      # row-wise
     return adj
@@ -149,6 +142,7 @@ def sparse_mx_to_torch_sparse_tensor(sparse_mx):
 
 def accuracy(output, labels):
 
+    # use scalar labels
     preds = output.max(1)[1].type_as(labels)
     correct = preds.eq(labels).double()
     correct = correct.sum()
