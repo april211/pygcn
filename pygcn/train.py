@@ -11,6 +11,7 @@ import torch.optim as optim
 
 from utils import load_data, accuracy
 from models import GCN
+from logger import mylogger
 
 
 def train(epoch):
@@ -38,13 +39,19 @@ def train(epoch):
     loss_val = F.nll_loss(output[idx_val], labels_scalar[idx_val])
     acc_val = accuracy(output[idx_val], labels_scalar[idx_val])
 
-    print('Epoch: {:04d}'.format(epoch+1),
-          'loss_train: {:.4f}'.format(loss_train.item()),
-          'acc_train: {:.4f}'.format(acc_train.item()),
-          'loss_val: {:.4f}'.format(loss_val.item()),
-          'acc_val: {:.4f}'.format(acc_val.item()),
-          'time: {:.4f}s'.format(time.time() - t))
+    mylogger.logger.info('Training Epoch: {:04d}'.format(epoch+1))
 
+    param_fmt_str = 'loss_train: {:.4f}, acc_train: {:.4f}, loss_val: {:.4f}, acc_val: {:.4f}'
+    mylogger.logger.info(
+        param_fmt_str.format(
+            loss_train.item(),
+            acc_train.item(),
+            loss_val.item(),
+            acc_val.item()
+        )
+    )
+
+    mylogger.logger.info('Training Epoch Time: {:.4f}s'.format(time.time() - t))
 
 def test():
 
@@ -56,9 +63,8 @@ def test():
 
     acc_test = accuracy(output[idx_test], labels_scalar[idx_test])
 
-    print("Test set results:",
-          "loss= {:.4f}".format(loss_test.item()),
-          "accuracy= {:.4f}".format(acc_test.item()))
+    mylogger.logger.info("Test set loss= {:.4f}, accuracy= {:.4f}".format(
+                                                loss_test.item(), acc_test.item()))
 
 if __name__ == "__main__":
 
@@ -112,12 +118,13 @@ if __name__ == "__main__":
     
     # Train model
     t_total = time.time()
+    mylogger.logger.info(f"time: {time.strftime('%m-%d-%Y-%H:%M:%S')}")
 
     for epoch in range(args.epochs):
         train(epoch)
 
-    print("Optimization Finished!")
-    print("Total time elapsed: {:.4f}s".format(time.time() - t_total))
+    mylogger.logger.info("Training Finished!")
+    mylogger.logger.info("Total time elapsed: {:.4f}s".format(time.time() - t_total))
 
     # Testing
     test()

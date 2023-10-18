@@ -2,6 +2,7 @@ import numpy as np
 import scipy.sparse as sp
 import torch
 from sklearn.preprocessing import LabelEncoder
+from logger import mylogger
 
 
 def load_data(path="./data/cora/", dataset="cora"):
@@ -9,7 +10,7 @@ def load_data(path="./data/cora/", dataset="cora"):
     Load citation network dataset (cora only for now)
     """
 
-    print('Loading {} dataset...'.format(dataset))
+    mylogger.logger.info('Loading {} dataset...'.format(dataset))
 
     # read the whole data using str first due to the format of the labels
     idx_features_labels = np.genfromtxt("{}{}.content".format(path, dataset),
@@ -76,6 +77,8 @@ def load_data(path="./data/cora/", dataset="cora"):
     labels_scalar = torch.LongTensor(labels_scalar)       # get scalar label from col-idx
     
     DAD = sparse_mx_to_torch_sparse_tensor(DAD)
+
+    mylogger.logger.info("Dataset `{}` Loaded!".format(dataset))
     
     return DAD, X, labels_scalar, num_classes, idx_train, idx_val, idx_test
 
