@@ -101,6 +101,8 @@ def random_walk_normalization(adj):
     It behaves exactly the same as the func `normalize_features`.
     """
 
+    mylogger.logger.info(f"Using Func `random_walk_normalization` for Normalization")
+
     rowsum = np.array(adj.sum(1))
     r_inv = np.power(rowsum, -1).flatten()
     r_inv[np.isinf(r_inv)] = 0.                   # rowsum == 0
@@ -109,6 +111,8 @@ def random_walk_normalization(adj):
     return adj
 
 def symmetric_normalization(adj : sp.csr_matrix):
+
+    mylogger.logger.info(f"Using Func `symmetric_normalization` for Normalization")
 
     # calculate degrees for each node
     degrees = adj.sum(axis=0)

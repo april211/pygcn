@@ -89,6 +89,10 @@ if __name__ == "__main__":
     args = parser.parse_args()
     args.cuda = not args.no_cuda and torch.cuda.is_available()
 
+    mylogger.logger.info(f"cuda= {args.cuda}, fastmode= {args.fastmode}, seed= {args.seed}")
+    mylogger.logger.info(f"epochs= {args.epochs}, lr= {args.lr}, weight_decay= {args.weight_decay}")
+    mylogger.logger.info(f"hidden= {args.hidden}, dropout= {args.dropout}")
+
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
     if args.cuda:
