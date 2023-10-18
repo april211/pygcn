@@ -28,7 +28,7 @@ def load_data(path="./data/cora/", dataset="cora"):
     
     # use `Sparse Row format` to gerenate a sparse mat.
     # skip the id & the label to read the word vecs.
-    features = sp.csr_matrix(idx_features_labels[:, 1:-1], dtype=np.float32)
+    X = sp.csr_matrix(idx_features_labels[:, 1:-1], dtype=np.float32)
 
     # read the labels & one-hot them
     labels = encode_onehot(idx_features_labels[:, -1])
@@ -52,57 +52,123 @@ def load_data(path="./data/cora/", dataset="cora"):
     # A[i[k], j[k]] = data[k]
     adj = sp.coo_matrix((np.ones(edges.shape[0]), (edges[:, 0], edges[:, 1])),
                         shape=(labels.shape[0], labels.shape[0]),         # N x N
-                        dtype=np.float32)
+                        dtype=np.float32).tocsr()       # convert to csr format for better pf
 
     # generate symmetric adjacency matrix by performing point-wise multiplication
     # adj.T  adj    adj.T > adj     shall we?
     #   0     0         F               N
-    #   0     1         F               + (to adj.T)
-    #   1     0         T               + (to adj)
+    #   0     1         F               N
+    #   1     0         T               Y
     #   1     1         F               N
-    adj = adj + adj.T.multiply(adj.T > adj) - adj.multiply(adj.T > adj)
+    # if A-ij > 1, then b = a + b - a & "adj = adj.T".
+    # `multiply(adj.T > adj)` indicates elements need to be modified.
+    adj = adj + adj.T.multiply(adj.T > adj) - adj.multiply(adj.T > adj)     
 
-    features = normalize(features)
-    adj = normalize(adj + sp.eye(adj.shape[0]))
+    # normalize word vecs
+    X = normalize_features(X)
 
-    idx_train = range(140)
-    idx_val = range(200, 500)
-    idx_test = range(500, 1500)
+    # add self-connection for each node
+    adj_hat = adj + sp.eye(adj.shape[0], format="csr")
 
-    features = torch.FloatTensor(np.array(features.todense()))
-    labels = torch.LongTensor(np.where(labels)[1])
-    adj = sparse_mx_to_torch_sparse_tensor(adj)
+    # perform random walk normalization
+    # DA = random_walk_normalization(adj + sp.eye(adj.shape[0]))
 
-    idx_train = torch.LongTensor(idx_train)
-    idx_val = torch.LongTensor(idx_val)
-    idx_test = torch.LongTensor(idx_test)
+    # perform symmetric normalization
+    DAD = symmetric_normalization(adj_hat)
 
-    return adj, features, labels, idx_train, idx_val, idx_test
+    idx_train = torch.LongTensor(range(140))
+    idx_val = torch.LongTensor(range(200, 500))
+    idx_test = torch.LongTensor(range(500, 1500))
+
+    X = torch.FloatTensor(np.array(X.todense()))
+    labels = torch.LongTensor(np.where(labels)[1])          # get scalar label
+    DAD = sparse_mx_to_torch_sparse_tensor(DAD)
+    
+    return DAD, X, labels, idx_train, idx_val, idx_test
 
 
-def normalize(mx):
-    """Row-normalize sparse matrix"""
-    rowsum = np.array(mx.sum(1))
+def normalize_features(X):
+    """
+    Row-normalize sparse matrix.
+    """
+
+    rowsum = np.array(X.sum(1))
     r_inv = np.power(rowsum, -1).flatten()
-    r_inv[np.isinf(r_inv)] = 0.
+    r_inv[np.isinf(r_inv)] = 0.                 # rowsum == 0
     r_mat_inv = sp.diags(r_inv)
-    mx = r_mat_inv.dot(mx)
-    return mx
+    X = r_mat_inv.dot(X)                      # row-wise
+    return X
 
+def random_walk_normalization(adj):
+    """
+    Row-normalize sparse matrix.
+    It behaves exactly the same as the func `normalize_features`.
+    """
 
-def accuracy(output, labels):
-    preds = output.max(1)[1].type_as(labels)
-    correct = preds.eq(labels).double()
-    correct = correct.sum()
-    return correct / len(labels)
+    rowsum = np.array(adj.sum(1))
+    r_inv = np.power(rowsum, -1).flatten()
+    r_inv[np.isinf(r_inv)] = 0.                 # rowsum == 0
+    r_mat_inv = sp.diags(r_inv)
+    adj = r_mat_inv.dot(adj)                      # row-wise
+    return adj
+
+def symmetric_normalization(adj : sp.csr_matrix):
+
+    # calculate degrees for each node
+    degrees = adj.sum(axis=0)
+
+    # generate sparse matrix D using the degrees of nodes.
+    D = sp.dia_matrix((degrees, 0), shape=adj.shape).tocsr()
+
+    # derive the sym-norm matrix
+    D_pow = D.power(-0.5)
+
+    return D_pow.dot(adj).dot(D_pow)            # DAD
 
 
 def sparse_mx_to_torch_sparse_tensor(sparse_mx):
-    """Convert a scipy sparse matrix to a torch sparse tensor."""
+    """
+    Convert a scipy sparse matrix to a torch sparse tensor.
+    """
+
+    # make sure it's coo format first
     sparse_mx = sparse_mx.tocoo().astype(np.float32)
+
+    # TODO probe the variable: indices
     indices = torch.from_numpy(
-        np.vstack((sparse_mx.row, sparse_mx.col)).astype(np.int64))
+        np.vstack((sparse_mx.row, sparse_mx.col)).astype(np.int64)
+    )
+
+    # get all the values corresponding to the indices
     values = torch.from_numpy(sparse_mx.data)
+
     shape = torch.Size(sparse_mx.shape)
+
     return torch.sparse.FloatTensor(indices, values, shape)
+
+
+def accuracy(output, labels):
+
+    preds = output.max(1)[1].type_as(labels)
+    correct = preds.eq(labels).double()
+    correct = correct.sum()
+
+    return correct / len(labels)
+
+
+# unit testing
+if __name__ == "__main__":
+
+    adj = np.array([[0, 1, 1, 1],
+                    [1, 0, 1, 0],
+                    [1, 1, 0, 0],
+                    [1, 0, 0, 0]])
+    
+    adj = sp.csr_matrix(adj, dtype=np.float32)
+    
+    adj_hat = adj + sp.eye(adj.shape[0], format="csr")
+
+    DAD = symmetric_normalization(adj_hat)
+
+    print(DAD.todense())
 
