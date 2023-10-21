@@ -20,9 +20,10 @@ def train(epoch):
     model.train()
     optimizer.zero_grad()
 
+    # use all the features and structure information to gain the prediction
     output = model(X, DAD)
 
-    # use training samples only to train the model
+    # **use the training labels only** to train the model (semi-supervised)
     # Note: F.nll_loss use scalar labels, not one-hot labels!
     loss_train = F.nll_loss(output[idx_train], labels_scalar[idx_train])
     loss_train.backward()
