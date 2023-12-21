@@ -71,10 +71,15 @@ if __name__ == "__main__":
 
     # Training settings
     parser = argparse.ArgumentParser()
-    parser.add_argument('--no-cuda', action='store_true', default=True,
+
+    # if you want to use cpu, set this flag
+    parser.add_argument('--no-cuda', action='store_true', default=False,        
                         help='Disables CUDA training.')
+    
+    # if you want to skip validation during training, set this flag
     parser.add_argument('--fastmode', action='store_true', default=False,
                         help='Skip validation during training.')
+    
     parser.add_argument('--seed', type=int, default=42, help='Random seed.')
     parser.add_argument('--epochs', type=int, default=200,
                         help='Number of epochs to train.')
